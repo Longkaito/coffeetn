@@ -21,7 +21,7 @@ const ThankYouPopup: React.FC<ThankYouPopupProps> = ({ onClose, customerName }) 
           Chúng tôi sẽ liên hệ với bạn sớm để xác nhận thông tin giao hàng.
         </p>
         <button
-          onClick={onClose}
+          onClick={() => {onClose(); location.reload();}}
           className="px-6 py-3 bg-brown-600 text-white rounded-full font-semibold hover:bg-brown-700 transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-brown-500 focus:ring-opacity-50"
         >
           Đóng
