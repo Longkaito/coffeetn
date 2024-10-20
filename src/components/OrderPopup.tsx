@@ -13,6 +13,7 @@ const OrderPopup: React.FC<OrderPopupProps> = ({ onClose, total }) => {
   const [address, setAddress] = useState('');
   const [phoneError, setPhoneError] = useState('');
   const [showThankYou, setShowThankYou] = useState(false);
+  const carts = JSON.parse(localStorage.getItem("cartItems") || "[]");
 
   const validatePhone = (value: string) => {
     const phoneRegex = /^(0|\+84)(\s?[0-9]{9})$/;
@@ -29,23 +30,32 @@ const OrderPopup: React.FC<OrderPopupProps> = ({ onClose, total }) => {
     validatePhone(value);
   };
 
+  function formatCurrency(amount: number) {
+    const formattedAmount = amount.toLocaleString('vi-VN');
+    return `${formattedAmount}đ`;
+  }
+
   async function handleSubmit(e: React.FormEvent) {
+    let products = "";
+
+    carts.forEach((cart: any) => {
+      products = products + `${cart.name} x${cart.quantity}\n\t\t\t\t`;
+    });
+
     e.preventDefault();
     const content = `
-      Tên khách hàng: ${name}
-      Số điện thoại: ${phone}
-      Địa chỉ: ${address}
-      Tổng tiền: ${total}
+      Tên khách hàng: ${name}\nSố điện thoại: ${phone}\nĐịa chỉ: ${address}\nTổng tiền: ${formatCurrency(total)}\nSản phẩm: \n\t\t\t\t${products}
     `;
+
+    const encodedContent = encodeURIComponent(content);
     
-    const url = `https://api.telegram.org/bot7637526991:AAHrp8RZ3m793vYAp8jAO9BawFSys3S6Urs/sendMessage?chat_id=-4541856003&text=${content}`;
+    const url = `https://api.telegram.org/bot7637526991:AAHrp8RZ3m793vYAp8jAO9BawFSys3S6Urs/sendMessage?chat_id=-4541856003&text=${encodedContent}`;
     try {
       const response = await fetch(url);
       if (!response.ok) {
         throw new Error(`Response status: ${response.status}`);
       }
       if (!phoneError) {
-        const json = await response.json();
         setShowThankYou(true);
         localStorage.removeItem("cartItems");
       }
