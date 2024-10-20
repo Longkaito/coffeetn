@@ -157,7 +157,7 @@ const HomePage: React.FC<HomePageProps> = ({ addToCart }) => {
       )}
       
       <section className="mb-12">
-        <h2 className="text-3xl font-bold mb-4">Chào mừng đến với Cà Phê Ngon</h2>
+        <h2 className="text-3xl font-bold mb-4">Chào mừng đến với E-Coffee</h2>
         <p className="text-lg">
           Chúng tôi tự hào mang đến cho bạn những hạt cà phê chất lượng nhất, được chọn lọc kỹ càng từ các vùng trồng nổi tiếng.
           Hãy đến và trải nghiệm hương vị đặc biệt của chúng tôi!

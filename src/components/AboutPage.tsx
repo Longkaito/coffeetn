@@ -36,9 +36,9 @@ const AboutPage: React.FC = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6">Giới thiệu về Cà Phê Ngon</h1>
+      <h1 className="text-3xl font-bold mb-6">Giới thiệu về E-Coffee</h1>
       <p className="mb-8 text-lg">
-        Tại Cà Phê Ngon, chúng tôi tự hào mang đến cho bạn những trải nghiệm cà phê đặc biệt và độc đáo. 
+        Tại E-Coffee, chúng tôi tự hào mang đến cho bạn những trải nghiệm cà phê đặc biệt và độc đáo. 
         Mỗi loại cà phê của chúng tôi đều được chọn lọc kỹ càng từ những hạt cà phê chất lượng nhất và 
         được pha chế theo công thức riêng biệt để tạo nên hương vị đặc trưng không thể trộn lẫn.
       </p>

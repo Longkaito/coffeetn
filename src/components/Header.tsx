@@ -12,7 +12,7 @@ const Header: React.FC<HeaderProps> = ({ cartItemCount, setCurrentPage }) => {
       <div className="container mx-auto flex flex-col sm:flex-row justify-between items-center">
         <div className="flex items-center mb-4 sm:mb-0">
           <Coffee className="w-8 h-8 mr-2 cursor-pointer" onClick={() => setCurrentPage('home')} />
-          <span className="text-xl font-bold cursor-pointer" onClick={() => setCurrentPage('home')}>Cà Phê Ngon</span>
+          <span className="text-xl font-bold cursor-pointer" onClick={() => setCurrentPage('home')}>E-Coffee</span>
         </div>
         <nav>
           <ul className="flex flex-wrap justify-center sm:space-x-4">
