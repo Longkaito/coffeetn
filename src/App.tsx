@@ -65,7 +65,7 @@ function App() {
               />
             } />
             <Route path="/about" element={<AboutPage />} />
-            <Route path="/admin" element={<AdminPage />} />
+            <Route path="/admin-tn" element={<AdminPage />} />
           </Routes>
         </main>
         <Footer />
