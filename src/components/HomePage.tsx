@@ -19,61 +19,46 @@ interface HomePageProps {
 const HomePage: React.FC<HomePageProps> = ({ addToCart }) => {
   const [notification, setNotification] = useState<{ message: string; product: Product } | null>(null);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [promotionalProducts, setPromotionalProducts] = useState<PromotionalProduct[]>([]);
+  const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
+  const [refreshingDrinks, setRefreshingDrinks] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const promotionalProducts: PromotionalProduct[] = [
-    {
-      name: 'Cà phê Espresso Blend',
-      price: '120.000đ',
-      originalPrice: '150.000đ',
-      discountPercentage: 20,
-      image: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80'
-    },
-    {
-      name: 'Cà phê Cold Brew',
-      price: '45.000đ',
-      originalPrice: '60.000đ',
-      discountPercentage: 25,
-      image: 'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80'
-    },
-    {
-      name: 'Bộ pha cà phê Drip',
-      price: '280.000đ',
-      originalPrice: '350.000đ',
-      discountPercentage: 20,
-      image: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80'
-    },
-    {
-      name: 'Cà phê Cappuccino',
-      price: '50.000đ',
-      originalPrice: '65.000đ',
-      discountPercentage: 23,
-      image: 'https://images.unsplash.com/photo-1572442388796-11668a67e53d?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80'
-    },
-  ];
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch('https://67387e0d4eb22e24fca81726.mockapi.io/api/products');
+        const data = await response.json();
 
-  const featuredProducts: Product[] = [
-    { name: 'Cà phê Robusta', price: '80.000đ', image: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80' },
-    { name: 'Cà phê Arabica', price: '100.000đ', image: 'https://images.unsplash.com/photo-1511920170033-f8396924c348?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80' },
-    { name: 'Cà phê Chồn', price: '250.000đ', image: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80' },
-    { name: 'Cà phê Moka', price: '120.000đ', image: 'https://images.unsplash.com/photo-1497935586351-b67a49e012bf?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80' },
-    { name: 'Cà phê Culi', price: '90.000đ', image: 'https://images.unsplash.com/photo-1442512595331-e89e73853f31?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80' },
-    { name: 'Cà phê Cherry', price: '110.000đ', image: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80' },
-  ];
+        // Lọc sản phẩm theo category
+        const promotional = data.filter((item: any) => 
+          item.category === "Chương trình khuyến mại"
+        ) as PromotionalProduct[];
 
-  const refreshingDrinks: Product[] = [
-    { name: 'Trà xanh matcha', price: '45.000đ', image: 'https://images.unsplash.com/photo-1515823064-d6e0c04616a7?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80' },
-    { name: 'Trà hoa cúc mật ong', price: '40.000đ', image: 'https://images.unsplash.com/photo-1544787219-7f47ccb76574?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80' },
-    { name: 'Nước ép dưa hấu', price: '35.000đ', image: 'https://images.unsplash.com/photo-1615478503562-ec2d8aa0e24e?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80' },
-    { name: 'Sinh tố bơ', price: '50.000đ', image: 'https://images.unsplash.com/photo-1623065422902-30a2d299bbe4?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80' },
-    { name: 'Soda chanh bạc hà', price: '38.000đ', image: 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80' },
-    { name: 'Trà đào cam sả', price: '42.000đ', image: 'https://images.unsplash.com/photo-1556679343-c7306c1976bc?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80' },
-    { name: 'Nước ép cà rốt gừng', price: '38.000đ', image: 'https://images.unsplash.com/photo-1622597467836-f3285f2131b8?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80' },
-    { name: 'Smoothie dâu chuối', price: '48.000đ', image: 'https://images.unsplash.com/photo-1505252585461-04db1eb84625?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80' },
-    { name: 'Trà atiso mật ong', price: '40.000đ', image: 'https://images.unsplash.com/photo-1597481499750-3e6b22637e12?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80' },
-    { name: 'Nước ép cần tây táo', price: '45.000đ', image: 'https://images.unsplash.com/photo-1589733955941-5eeaf752f6dd?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80' },
-    { name: 'Trà ô long hoa nhài', price: '42.000đ', image: 'https://images.unsplash.com/photo-1576092768241-dec231879fc3?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80' },
-    { name: 'Nước dừa tươi', price: '35.000đ', image: 'https://images.unsplash.com/photo-1551538827-9c037cb4f32a?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80' },
-  ];
+        const featured = data.filter((item: any) => 
+          item.category === "Sản phẩm nổi bật"
+        ) as Product[];
+
+        const refreshing = data.filter((item: any) => 
+          item.category === "Đồ uống thanh nhiệt"
+        ) as Product[];
+
+        setPromotionalProducts(promotional);
+        setFeaturedProducts(featured);
+        setRefreshingDrinks(refreshing);
+        setLoading(false);
+      } catch (error) {
+        console.error('Lỗi khi tải dữ liệu:', error);
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  if (loading) {
+    return <div className="container mx-auto px-4 py-8">Đang tải...</div>;
+  }
 
   const handleAddToCart = (product: Product) => {
     addToCart(product);
@@ -184,10 +169,6 @@ const HomePage: React.FC<HomePageProps> = ({ addToCart }) => {
         <h2 className="text-3xl font-bold mb-6">Đồ uống thanh nhiệt</h2>
         <ProductGrid products={refreshingDrinks} />
       </section>
-
-      {selectedProduct && (
-        <AddToCartPopup product={selectedProduct} onClose={handleClosePopup} />
-      )}
     </div>
   );
 };

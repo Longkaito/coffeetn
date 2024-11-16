@@ -1,5 +1,6 @@
 import React from 'react';
 import { Coffee, ShoppingCart } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 interface HeaderProps {
   cartItemCount: number;
@@ -11,15 +12,18 @@ const Header: React.FC<HeaderProps> = ({ cartItemCount, setCurrentPage }) => {
     <header className="bg-brown-800 text-white p-4">
       <div className="container mx-auto flex flex-col sm:flex-row justify-between items-center">
         <div className="flex items-center mb-4 sm:mb-0">
-          <Coffee className="w-8 h-8 mr-2 cursor-pointer" onClick={() => setCurrentPage('home')} />
-          <span className="text-xl font-bold cursor-pointer" onClick={() => setCurrentPage('home')}>E-Coffee</span>
+          <Link to="/" className="font-bold cursor-pointer" style={{ fontSize: '28px' }}>Trung Nguyên E-Coffee</Link>
         </div>
         <nav>
           <ul className="flex flex-wrap justify-center sm:space-x-4">
-            <li className="mx-2 my-1 sm:mx-0 sm:my-0"><a href="#" className="hover:text-brown-300" onClick={() => setCurrentPage('home')}>Trang chủ</a></li>
-            <li className="mx-2 my-1 sm:mx-0 sm:my-0"><a href="#" className="hover:text-brown-300" onClick={() => setCurrentPage('about')}>Giới thiệu</a></li>
             <li className="mx-2 my-1 sm:mx-0 sm:my-0">
-              <a href="#" className="hover:text-brown-300 flex items-center" onClick={() => setCurrentPage('cart')}>
+              <Link to="/" className="hover:text-brown-300" onClick={() => setCurrentPage('home')}>Trang chủ</Link>
+            </li>
+            <li className="mx-2 my-1 sm:mx-0 sm:my-0">
+              <Link to="/about" className="hover:text-brown-300" onClick={() => setCurrentPage('about')}>Giới thiệu</Link>
+            </li>
+            <li className="mx-2 my-1 sm:mx-0 sm:my-0">
+              <Link to="/cart" className="hover:text-brown-300 flex items-center" onClick={() => setCurrentPage('cart')}>
                 <ShoppingCart className="w-4 h-4 mr-1" />
                 Giỏ hàng
                 {cartItemCount > 0 && (
@@ -27,7 +31,7 @@ const Header: React.FC<HeaderProps> = ({ cartItemCount, setCurrentPage }) => {
                     {cartItemCount}
                   </span>
                 )}
-              </a>
+              </Link>
             </li>
           </ul>
         </nav>

@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import HomePage from './components/HomePage';
 import CartPage from './components/CartPage';
 import AboutPage from './components/AboutPage';
+import AdminPage from './components/AdminPage';
 
 interface CartItem {
   id: number;
@@ -48,33 +50,27 @@ function App() {
     setCartItems((prevItems) => prevItems.filter((item) => item.id !== id));
   };
 
-  const renderPage = () => {
-    switch (currentPage) {
-      case 'home':
-        return <HomePage addToCart={addToCart} />;
-      case 'cart':
-        return (
-          <CartPage
-            cartItems={cartItems}
-            updateQuantity={updateQuantity}
-            removeItem={removeItem}
-          />
-        );
-      case 'about':
-        return <AboutPage />;
-      default:
-        return <HomePage addToCart={addToCart} />;
-    }
-  };
-
   return (
-    <div className="flex flex-col min-h-screen">
-      <Header cartItemCount={cartItems.length} setCurrentPage={setCurrentPage} />
-      <main className="flex-grow bg-brown-50">
-        {renderPage()}
-      </main>
-      <Footer />
-    </div>
+    <Router>
+      <div className="flex flex-col min-h-screen">
+        <Header cartItemCount={cartItems.length} setCurrentPage={setCurrentPage} />
+        <main className="flex-grow bg-brown-50">
+          <Routes>
+            <Route path="/" element={<HomePage addToCart={addToCart} />} />
+            <Route path="/cart" element={
+              <CartPage
+                cartItems={cartItems}
+                updateQuantity={updateQuantity}
+                removeItem={removeItem}
+              />
+            } />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/admin" element={<AdminPage />} />
+          </Routes>
+        </main>
+        <Footer />
+      </div>
+    </Router>
   );
 }
 
