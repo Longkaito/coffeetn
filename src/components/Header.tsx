@@ -33,6 +33,9 @@ const Header: React.FC<HeaderProps> = ({ cartItemCount, setCurrentPage }) => {
                 )}
               </Link>
             </li>
+            <li className="mx-2 my-1 sm:mx-0 sm:my-0">
+              <Link to="/admin" className="hover:text-brown-300" onClick={() => setCurrentPage('admin')}>Admin</Link>
+            </li>
           </ul>
         </nav>
       </div>
