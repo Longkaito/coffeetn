@@ -9,6 +9,7 @@ interface Product {
   discountPercentage: number;
   image: string;
   category: string;
+  active: boolean;
 }
 
 function AdminPage() {
@@ -25,7 +26,8 @@ function AdminPage() {
     originalPrice: '',
     discountPercentage: 0,
     image: '',
-    category: 'Đồ uống thanh nhiệt'
+    category: 'Đồ uống thanh nhiệt',
+    active: true
   });
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [username, setUsername] = useState('');
@@ -208,7 +210,8 @@ function AdminPage() {
         originalPrice: '',
         discountPercentage: 0,
         image: '',
-        category: 'Đồ uống thanh nhiệt'
+        category: 'Đồ uống thanh nhiệt',
+        active: true
       });
       toast.success('Thêm sản phẩm thành công!');
     } catch (error) {
@@ -263,6 +266,7 @@ function AdminPage() {
               <th className="px-4 py-2 border">Giảm giá (%)</th>
               <th className="px-4 py-2 border">Danh mục</th>
               <th className="px-4 py-2 border">Hình ảnh</th>
+              <th className="px-4 py-2 border">Trạng thái</th>
               <th className="px-4 py-2 border">Hành động</th>
             </tr>
           </thead>
@@ -277,6 +281,17 @@ function AdminPage() {
                 <td className="px-4 py-2 border">{product.category}</td>
                 <td className="px-4 py-2 border">
                   <img src={product.image} alt={product.name} className="w-20 h-20 object-cover" />
+                </td>
+                <td className="px-4 py-2 border">
+                  {product.active ? (
+                    <span className="px-3 py-1 inline-flex text-sm leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                      Hoạt động
+                    </span>
+                  ) : (
+                    <span className="px-3 py-1 inline-flex text-sm leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                      Không hoạt động  
+                    </span>
+                  )}
                 </td>
                 <td className="px-4 py-2 border">
                   <div className="flex gap-2 justify-center">
@@ -391,6 +406,21 @@ function AdminPage() {
                   <option value="Chương trình khuyến mại">Chương trình khuyến mại</option>
                   <option value="Sản phẩm nổi bật">Sản phẩm nổi bật</option>
                   <option value="Đồ uống thanh nhiệt">Đồ uống thanh nhiệt</option>
+                </select>
+              </div>
+
+              <div className="mb-4">
+                <label className="block mb-2">Trạng thái</label>
+                <select
+                  value={selectedProduct.active.toString()}
+                  onChange={(e) => setSelectedProduct({
+                    ...selectedProduct,
+                    active: e.target.value === 'true'
+                  })}
+                  className="w-full border p-2 rounded"
+                >
+                  <option value="true">Hoạt động</option>
+                  <option value="false">Không hoạt động</option>
                 </select>
               </div>
 
@@ -527,6 +557,21 @@ function AdminPage() {
                   <option value="Chương trình khuyến mại">Chương trình khuyến mại</option>
                   <option value="Sản phẩm nổi bật">Sản phẩm nổi bật</option>
                   <option value="Đồ uống thanh nhiệt">Đồ uống thanh nhiệt</option>
+                </select>
+              </div>
+
+              <div className="mb-4">
+                <label className="block mb-2">Trạng thái</label>
+                <select
+                  value={newProduct.active.toString()}
+                  onChange={(e) => setNewProduct({
+                    ...newProduct,
+                    active: e.target.value === 'true'
+                  })}
+                  className="w-full border p-2 rounded"
+                >
+                  <option value="true">Hoạt động</option>
+                  <option value="false">Không hoạt động</option>
                 </select>
               </div>
 

@@ -5,6 +5,7 @@ interface Product {
   name: string;
   price: string;
   image: string;
+  active: boolean;
 }
 
 interface PromotionalProduct extends Product {
@@ -72,51 +73,60 @@ const HomePage: React.FC<HomePageProps> = ({ addToCart }) => {
 
   const ProductGrid: React.FC<{ products: Product[] }> = ({ products }) => (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
-      {products.map((product, index) => (
-        <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden">
-          <img src={product.image} alt={product.name} className="w-full h-48 object-cover" />
-          <div className="p-4">
-            <h3 className="text-lg font-semibold mb-2">{product.name}</h3>
-            <p className="text-gray-600">{product.price}</p>
-            <button
-              className="mt-4 bg-brown-600 text-white py-2 px-4 rounded hover:bg-brown-700 w-full"
-              onClick={() => handleAddToCart(product)}
-            >
-              Mua ngay
-            </button>
+      {products
+        .filter(product => product.active)
+        .map((product, index) => (
+          <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden">
+            <img src={product.image} alt={product.name} className="w-full h-48 object-cover" />
+            <div className="p-4">
+              <h3 className="text-lg font-semibold mb-2">{product.name}</h3>
+              <p className="text-gray-600">{product.price}</p>
+              <button
+                className="mt-4 bg-brown-600 text-white py-2 px-4 rounded hover:bg-brown-700 w-full"
+                onClick={() => handleAddToCart(product)}
+              >
+                Mua ngay
+              </button>
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
     </div>
   );
 
   const PromotionalProductGrid: React.FC<{ products: PromotionalProduct[] }> = ({ products }) => (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
-      {products.map((product, index) => (
-        <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden">
-          <div className="relative">
-            <img src={product.image} alt={product.name} className="w-full h-48 object-cover" />
-            <div className="absolute top-0 right-0 bg-red-500 text-white px-2 py-1 rounded-bl-lg">
-              -{product.discountPercentage}%
+      {products
+        .filter(product => product.active)
+        .map((product, index) => (
+          <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden">
+            <div className="relative">
+              <img src={product.image} alt={product.name} className="w-full h-48 object-cover" />
+              <div className="absolute top-0 right-0 bg-red-500 text-white px-2 py-1 rounded-bl-lg">
+                -{product.discountPercentage}%
+              </div>
+            </div>
+            <div className="p-4">
+              <h3 className="text-lg font-semibold mb-2">{product.name}</h3>
+              <div className="flex justify-between items-center mb-2">
+                <p className="text-gray-600 line-through">{product.originalPrice}</p>
+                <p className="text-red-600 font-semibold">{product.price}</p>
+              </div>
+              <button
+                className="mt-2 bg-brown-600 text-white py-2 px-4 rounded hover:bg-brown-700 w-full"
+                onClick={() => handleAddToCart(product)}
+              >
+                Mua ngay
+              </button>
             </div>
           </div>
-          <div className="p-4">
-            <h3 className="text-lg font-semibold mb-2">{product.name}</h3>
-            <div className="flex justify-between items-center mb-2">
-              <p className="text-gray-600 line-through">{product.originalPrice}</p>
-              <p className="text-red-600 font-semibold">{product.price}</p>
-            </div>
-            <button
-              className="mt-2 bg-brown-600 text-white py-2 px-4 rounded hover:bg-brown-700 w-full"
-              onClick={() => handleAddToCart(product)}
-            >
-              Mua ngay
-            </button>
-          </div>
-        </div>
-      ))}
+        ))}
     </div>
   );
+
+  // Hàm kiểm tra xem category có sản phẩm active không
+  const hasCategoryActiveProducts = (products: Product[]) => {
+    return products.some(product => product.active);
+  };
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -149,26 +159,32 @@ const HomePage: React.FC<HomePageProps> = ({ addToCart }) => {
         </p>
       </section>
       
-      <section className="mb-12">
-        <div className="flex items-center mb-6">
-          <h2 className="text-3xl font-bold mr-3">Chương trình khuyến mại</h2>
-          <span className="bg-red-500 text-white text-sm font-bold py-1 px-2 rounded-full flex items-center">
-            <Flame size={16} className="mr-1" />
-            HOT
-          </span>
-        </div>
-        <PromotionalProductGrid products={promotionalProducts} />
-      </section>
+      {hasCategoryActiveProducts(promotionalProducts) && (
+        <section className="mb-12">
+          <div className="flex items-center mb-6">
+            <h2 className="text-3xl font-bold mr-3">Chương trình khuyến mại</h2>
+            <span className="bg-red-500 text-white text-sm font-bold py-1 px-2 rounded-full flex items-center">
+              <Flame size={16} className="mr-1" />
+              HOT
+            </span>
+          </div>
+          <PromotionalProductGrid products={promotionalProducts} />
+        </section>
+      )}
 
-      <section className="mb-12">
-        <h2 className="text-3xl font-bold mb-6">Sản phẩm nổi bật</h2>
-        <ProductGrid products={featuredProducts} />
-      </section>
+      {hasCategoryActiveProducts(featuredProducts) && (
+        <section className="mb-12">
+          <h2 className="text-3xl font-bold mb-6">Sản phẩm nổi bật</h2>
+          <ProductGrid products={featuredProducts} />
+        </section>
+      )}
 
-      <section>
-        <h2 className="text-3xl font-bold mb-6">Đồ uống thanh nhiệt</h2>
-        <ProductGrid products={refreshingDrinks} />
-      </section>
+      {hasCategoryActiveProducts(refreshingDrinks) && (
+        <section>
+          <h2 className="text-3xl font-bold mb-6">Đồ uống thanh nhiệt</h2>
+          <ProductGrid products={refreshingDrinks} />
+        </section>
+      )}
     </div>
   );
 };
