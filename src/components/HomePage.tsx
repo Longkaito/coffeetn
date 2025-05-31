@@ -23,6 +23,7 @@ const HomePage: React.FC<HomePageProps> = ({ addToCart }) => {
   const [promotionalProducts, setPromotionalProducts] = useState<PromotionalProduct[]>([]);
   const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
   const [refreshingDrinks, setRefreshingDrinks] = useState<Product[]>([]);
+  const [foods, setfoods] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -44,9 +45,15 @@ const HomePage: React.FC<HomePageProps> = ({ addToCart }) => {
           item.category === "Đồ uống thanh nhiệt"
         ) as Product[];
 
+        const foods = data.filter((item: any) => 
+          item.category === "Đồ ăn"
+        ) as Product[];
+
+
         setPromotionalProducts(promotional);
         setFeaturedProducts(featured);
         setRefreshingDrinks(refreshing);
+        setfoods(foods);
         setLoading(false);
       } catch (error) {
         console.error('Lỗi khi tải dữ liệu:', error);
@@ -180,9 +187,16 @@ const HomePage: React.FC<HomePageProps> = ({ addToCart }) => {
       )}
 
       {hasCategoryActiveProducts(refreshingDrinks) && (
-        <section>
+        <section className="mb-12">
           <h2 className="text-3xl font-bold mb-6">Đồ uống thanh nhiệt</h2>
           <ProductGrid products={refreshingDrinks} />
+        </section>
+      )}
+
+      {hasCategoryActiveProducts(refreshingDrinks) && (
+        <section>
+          <h2 className="text-3xl font-bold mb-6">Đồ ăn</h2>
+          <ProductGrid products={foods} />
         </section>
       )}
     </div>

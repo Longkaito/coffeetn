@@ -1,11 +1,12 @@
 import React from "react";
 import { Mail, Phone, MapPin } from "lucide-react";
+import bg_word from "../assets/images/bg_word.jpg";
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-brown-900 text-white py-8">
+    <footer className=" text-white py-8" style={{backgroundImage: `url('${bg_word}')`}}>
       <div className="container mx-auto px-4 flex flex-wrap justify-between">
-        <div className="w-full md:w-1/4 mb-6 md:mb-0">
+        <div className="w-full md:w-1/3 mb-6 md:mb-0">
           <h3 className="text-xl font-bold mb-4">E-Coffee</h3>
           <p>
             Chào mừng đến với Cà phê Trung Nguyên của chúng tôi! Nơi bạn thưởng
@@ -14,7 +15,7 @@ const Footer: React.FC = () => {
             qua và trải nghiệm hương vị cà phê đỉnh cao!
           </p>
         </div>
-        <div className="w-full md:w-1/4 mb-6 md:mb-0">
+        <div className="w-full md:w-1/3 mb-6 md:mb-0">
           <h3 className="text-xl font-bold mb-4">Liên hệ</h3>
           <ul>
             <li className="flex items-center mb-2">
@@ -31,7 +32,7 @@ const Footer: React.FC = () => {
             </li>
           </ul>
         </div>
-        <div className="w-full md:w-1/4 mb-6 md:mb-0">
+        {/* <div className="w-full md:w-1/3 mb-6 md:mb-0">
           <h3 className="text-xl font-bold mb-4">Đăng ký nhận tin</h3>
           <form className="flex flex-col sm:flex-row">
             <input
@@ -46,7 +47,7 @@ const Footer: React.FC = () => {
               Đăng ký
             </button>
           </form>
-        </div>
+        </div> */}
         <div className="w-full md:w-1/4">
           <h3 className="text-xl font-bold mb-4">Vị trí của chúng tôi</h3>
           <div className="relative">

@@ -253,6 +253,7 @@ function AdminPage() {
           <option value="Chương trình khuyến mại">Chương trình khuyến mại</option>
           <option value="Sản phẩm nổi bật">Sản phẩm nổi bật</option>
           <option value="Đồ uống thanh nhiệt">Đồ uống thanh nhiệt</option>
+          <option value="Đồ ăn">Đồ ăn</option>
         </select>
       </div>
       <div className="overflow-x-auto">
@@ -406,6 +407,7 @@ function AdminPage() {
                   <option value="Chương trình khuyến mại">Chương trình khuyến mại</option>
                   <option value="Sản phẩm nổi bật">Sản phẩm nổi bật</option>
                   <option value="Đồ uống thanh nhiệt">Đồ uống thanh nhiệt</option>
+                  <option value="Đồ ăn">Đồ ăn</option>
                 </select>
               </div>
 
@@ -557,6 +559,7 @@ function AdminPage() {
                   <option value="Chương trình khuyến mại">Chương trình khuyến mại</option>
                   <option value="Sản phẩm nổi bật">Sản phẩm nổi bật</option>
                   <option value="Đồ uống thanh nhiệt">Đồ uống thanh nhiệt</option>
+                  <option value="Đồ ăn">Đồ ăn</option>
                 </select>
               </div>
 

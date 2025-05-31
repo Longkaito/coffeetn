@@ -1,6 +1,7 @@
 import React from 'react';
 import { Coffee, ShoppingCart } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import bg_word from "../assets/images/bg_word.jpg";
 
 interface HeaderProps {
   cartItemCount: number;
@@ -9,7 +10,7 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ cartItemCount, setCurrentPage }) => {
   return (
-    <header className="bg-brown-800 text-white p-4">
+    <header className="text-white p-4" style={{backgroundImage: `url('${bg_word}')`}}>
       <div className="container mx-auto flex flex-col sm:flex-row justify-between items-center">
         <div className="flex items-center mb-4 sm:mb-0">
           <Link to="/" className="font-bold cursor-pointer" style={{ fontSize: '28px' }}>Trung Nguyên E-Coffee</Link>
